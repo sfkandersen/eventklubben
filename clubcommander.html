@@ -1,0 +1,965 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8" /><title>
+	Clubcommander - medlemssystem til online administration
+</title><meta name="description" content="Clubcommander - medlemssystem til online administration" /><meta name="keywords" content="medlemssystem, online betaling, online administration, billetsystem, administrationssystem, live poker system, eventsystem, eventbillet, pladsreservation, hold tilmelding, emailmarketing" /><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /><link REL="SHORTCUT ICON" href="/img/favicon.ico" /><link rel="stylesheet" type="text/css" media="all" href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" /><link href="http://fonts.googleapis.com/css?family=Raleway:400,700,300" rel="stylesheet" type="text/css" /><link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css" /><link rel="stylesheet" type="text/css" media="all" href="/css/motioncss.css" /><link rel="stylesheet" type="text/css" media="all" href="/css/motioncss-widgets.css" /><link rel="stylesheet" type="text/css" media="all" href="/css/font-awesome.css" /><link rel="stylesheet" type="text/css" media="all" href="/css/magnific-popup.css" /><link rel="stylesheet" type="text/css" media="all" href="/css/jquery.jgrowl.css" /><link rel="stylesheet" type="text/css" media="all" href="/css/style.css" /><link rel="stylesheet" type="text/css" media="all" href="/css/responsive.css" /><link rel="stylesheet" type="text/css" media="all" href="/css/colors/color_3.css" />
+
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+    w[l] = w[l] || []; w[l].push({
+    'gtm.start':
+    new Date().getTime(), event: 'gtm.js'
+    }); var f = d.getElementsByTagName(s)[0],
+    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-K23VC3L');</script>
+
+	<script type="text/javascript" src="/js/modernizr.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="/js/mediaelement-and-player.js"></script>
+	<script type="text/javascript" src="/js/jquery.easing.min.js"></script>
+	<script type="text/javascript" src="/js/jquery.carousello.js"></script>
+	<script type="text/javascript" src="/js/jquery.isotope.js"></script>
+	<script type="text/javascript" src="/js/jquery.magnific-popup.js"></script>
+	<script type="text/javascript" src="/js/jquery.jgrowl.js"></script>
+	<script type="text/javascript" src="/js/jquery.parallax.js"></script>
+	<script type="text/javascript" src="/js/jquery.queryloader2.js"></script>
+	<script type="text/javascript" src="/js/waypoints.min.js"></script>
+	<script type="text/javascript" src="/js/responsive.js"></script>
+	<script type="text/javascript" src="/js/plugins.js"></script>
+	<script type="text/javascript" src="/js/us.widgets.js"></script>
+
+    <!-- GMap-->
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="/js/jquery.gmap.min.js"></script>
+	<script type="text/javascript">
+	    jQuery(document).ready(function () {
+	        jQuery('.w-map-h').gMap({
+	            controls: {
+	                panControl: false,
+	                zoomControl: true,
+	                mapTypeControl: true,
+	                scaleControl: false,
+	                streetViewControl: false,
+	                overviewMapControl: false
+	            },
+	            address: "Syvstjernen 8, 5330 Munkebo, Denmark",
+	            zoom: 11,
+	            markers: [
+					{
+					    address: "Syvstjernen 8, 5330 Munkebo, Denmark",
+					    html: "Clubcommander",
+					    popup: true
+					}
+	            ]
+	        });
+	    });
+
+	</script>
+    <script type="text/javascript">
+            $(document).ready(function () {
+                if (!$.cookie('cookie_info_overlay')) {
+                    $('#cookies_overlay').animate({ 'bottom': 0 }, 1500);
+                }
+
+
+                $('#close-cookies-overlay').click(function (e) {
+                    e.preventDefault();
+                    $('#cookies_overlay').animate({ 'bottom': '-200px' }, 1500);
+                    $.cookie('cookie_info_overlay', 'viewed', { expires: 365 })
+                });
+            });
+    </script> 
+    
+    <style>
+        /* Cookies overlay */
+        #cookies_overlay{ font-family: 'Ubuntu', sans-serif; background:rgba(0,124,197,0.9); position:fixed; bottom: -200px; color:#FFF; padding:5px; width: 100%; z-index:100; text-align:center}
+        #cookies_overlay h4{ font-size:20px; color:#FFF; margin-bottom:10px; }
+        #cookies_overlay p{ margin-bottom:3px; color:#FFF; font-size:12px;}
+        #cookies_info_link{ text-decoration:underline; color:#FFF; font-weight:bold}
+
+        .cookie_close {
+            color: #008cd2;
+            font-weight: bold;
+            font-size: 12px;
+            background-color: #f2f2f2;
+            padding: 0 4px 0 3px;
+            border-radius: 3px;
+            cursor: pointer;
+            line-height: 15px;
+            margin-top: 10px;
+            margin-right:15px;
+        }
+    </style>
+    
+    <script type="text/javascript">
+
+        function verif_js(s, args) {
+            args.IsValid = true;
+            if (document.getElementById("ctl00_PageContentHolder_MyCheckBox").checked == false) {
+                args.IsValid = false
+            }
+        }
+
+        var validationSummary;
+
+        validationSummary.onpropertychange = function () {
+            if (this.style.display != 'none') {
+                validationSummary.scrollIntoView();
+            }
+        }   
+
+        function autoselect(value) {
+            select = document.getElementById("ctl00_PageContentHolder_SubscriptionList");
+            select.value = value;
+            location.href = "#buy";
+        }
+
+        function GetAnswer(domain) {
+            $("#DomainLabel").text("");
+            $.ajax({
+                type: "Post",
+                url: "default.aspx/GetAnswer",
+                data: "{'domain':'"+ domain +"'}",
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    //alert(result.d);
+                    $("#DomainLabel").html(result.d);
+                }
+            });
+        }
+    </script>
+    <style>
+        .bullet-list {
+            padding:0 !important;
+        }
+        .gray-line {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    </style>
+
+    
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-58966273-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <script type="text/javascript">
+        setTimeout(function () {
+            var a = document.createElement("script");
+            var b = document.getElementsByTagName("script")[0];
+            a.src = document.location.protocol + "//script.crazyegg.com/pages/scripts/0041/6071.js?" + Math.floor(new Date().getTime() / 3600000);
+            a.async = true; a.type = "text/javascript"; b.parentNode.insertBefore(a, b)
+        }, 1);
+    </script> 
+</head>
+<body class="l-body headertype_sticky headerpos_bottom">
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K23VC3L"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+
+<form name="aspnetForm" method="post" action="default.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="aspnetForm">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUHMzgxMzc2MWQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgEFImN0bDAwJFBhZ2VDb250ZW50SG9sZGVyJE15Q2hlY2tCb3gtlGxnVImQCRZntapqzjvIEvOYDg==" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=ZTgeoY2uLUIsY_vwzGVSrML11-Jv8TWn7MO3qy5fs1ifOD0PZGdmxM64aNaCMOW_EjzkT3Mx5jRvAXd-89jWmHtrvSg1&amp;t=636041026940000000" type="text/javascript"></script>
+
+
+<script src="/WebResource.axd?d=8jYu_C7oUEHSLwTE7rf9mA9gfMmzQFHk0WhHMa6xW2_os92AYSBvQsMgBHE8485i34l9lEjjdLGFW03tthiQ5A0hS0I1&amp;t=636041026940000000" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+	<input type="hidden" name="__SCROLLPOSITIONX" id="__SCROLLPOSITIONX" value="0" />
+	<input type="hidden" name="__SCROLLPOSITIONY" id="__SCROLLPOSITIONY" value="0" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWHgLuxtzECgKHusOyDwKI1encAwKJ1encAwKK1encAwLDqPaFBgLSwuu/BwLFyoqYBwKLwo1gAtui//QPAq2JuNUDAumVubABAqDG0b8PAt7J0/oHAvfjlZAKAviV9eAGAqWk7fYJAr2JlN4NAte87/oEAtb+hsYCAu2LoecFAvyjgpcFAsfXhNIDAvXppuAMAqC5koUOAtidstENArbG0/YJAovjns4LAuPsprIHAsiBjaIL1zGXQJuvtD4pCmIXwKPvP2USbwg=" />
+</div>
+
+<div class="l-header">
+	<div class="l-header-h">
+
+		<!-- subheader -->
+		<div class="l-subheader">
+			<div class="l-subheader-h i-cf">
+			
+				<!-- logo -->
+				<div class="w-logo">
+					<div class="w-logo-h">
+						<a class="w-logo-link" href="/">
+							<img class="w-logo-img" src="https://i.imgur.com/7QvBQQm.png" alt="Clubcommander">
+						</a>
+					</div>
+				</div>
+			
+				<!-- nav -->
+				<nav class="w-nav">
+					<div class="w-nav-h">
+						<div class="w-nav-control">
+							<i class="fa fa-bars"></i>
+						</div>
+						<div class="w-nav-list layout_hor width_auto level_1">
+							<div class="w-nav-list-h">
+								<div class="w-nav-item level_1">
+									<div class="w-nav-item-h">
+										<a href="/" class="w-nav-anchor level_1"><span class="w-nav-title">Forside</span><span class="w-nav-hint"></span></a>
+									</div>
+								</div>
+								<div class="w-nav-item level_1">
+									<div class="w-nav-item-h">
+										<a href="/#about" class="w-nav-anchor level_1"><span class="w-nav-title">Om systemet</span><span class="w-nav-hint"></span></a>
+									</div>
+								</div>
+								<div class="w-nav-item level_1">
+									<div class="w-nav-item-h">
+										<a href="/#prices" class="w-nav-anchor level_1"><span class="w-nav-title">Priser</span><span class="w-nav-hint"></span></a>
+									</div>
+								</div>
+								<div class="w-nav-item level_1">
+									<div class="w-nav-item-h">
+										<a href="/#buy" class="w-nav-anchor level_1"><span class="w-nav-title">Bestil systemet</span><span class="w-nav-hint"></span></a>
+									</div>
+								</div>
+								<div class="w-nav-item level_1";>
+									<div class="w-nav-item-h">
+										<a href="/#contact" class="w-nav-anchor level_1"><span class="w-nav-title">Kontakt</span><span class="w-nav-hint"></span></a>
+									</div>
+								</div>
+                                <div class="w-nav-item level_1";>
+									<div class="w-nav-item-h">
+										<a href="/#footer" class="w-nav-anchor level_1"><span class="w-nav-title">Support</span><span class="w-nav-hint"></span></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</nav>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+       
+
+    <div class="l-main">
+	    <div class="l-main-h">
+		    <!-- page: HOME -->
+		    <section id="home" class="l-section">
+			    <div id="parallax_subsection_0" class="l-subsection color_dar with_parallax" style="background-image:url(img/background.png);">
+				    <div class="l-subsection-h" style="vertical-align:initial">
+					    <div class="g-cols">
+						    <div class="ccm-head col-left">
+							    <p class="ccm-title">CLUBCOMMANDER</p>
+							    <p class="ccm-subtitle">
+								    Et online betalingssystem der gør det langt nemmere at administrere medlemmer, holdtilmelding og eget billetsalg til events.
+							    </p>
+						    </div>
+						    <div class="ccm-head col-right">
+							    <ul>
+								    <li><i class="fa fa-clock-o"></i><span> Altid online betaling</span></li>
+								    <li><i class="fa fa-calendar"></i><span> Hold tilmelding</span></li>
+								    <li><i class="fa fa-ticket"></i><span> Billetsalg</span></li>
+							    </ul>
+						    </div>
+					    </div>
+				    </div>
+			    </div>
+		    </section>
+
+		    <!-- page: ABOUT -->
+		    <section id="about" class="l-section">
+			    <div class="l-subsection color_alternate ">
+				    <div class="l-subsection-h">
+					    <div class="l-subsection-hh g-html i-cf">				
+						    <h2><strong>Om systemet</strong></h2>
+						    <div class="g-hr type_short">
+							    <span class="g-hr-h">
+								    <i class="fa fa-gears"></i>
+							    </span>
+						    </div>
+						    <p class="subtitle">Systemet kan håndtere <strong>tilmelding til hold</strong> og <strong> billetsalg til dine events</strong>.</p>
+						    <p>Det hele kan gøres uden abonnement eller andre løbende udgifter.</p>
+						    <div class="g-hr type_invisible"></div>
+						    <div class="g-cols">
+							    <div class="one-third">
+								    <p class="subtitle_about">Økonomiske fordele</p>
+								    <ul class="left">
+                                        <li>Ingen abonnement eller binding</li>
+								        <li>Ingen udgift til betalings gateway</li>
+								        <li>Systemet er brugerbetalt via betalingsgebyr</li>
+                                        <li>Gratis hosting</li>
+                                        <li>Ingen portoudgift på breve/girokort</li>
+								    </ul>
+							    </div>
+							    <div class="one-third">
+								    <p class="subtitle_about">Kommunikative fordele</p>
+								    <ul class="left">
+								        <li>Hold dine medlemmer opdateret om nyheder, hold eller arrangementer</li>
+								        <li>Send e-mails til enkelte medlemmer, et bestemt hold, eller til alle medlemmer i foreningen</li>
+								        <li>Få løbende system support” eller lignende der på en simplere måde beskriver budskabet.</li>
+								    </ul>
+							    </div>
+							    <div class="one-third">
+								    <p class="subtitle_about">Administrative fordele</p>
+								    <ul class="left">
+								        <li>Overblik over dine betalende medlemmer</li>
+								        <li>Overblik over betalende deltagere til dit event</li>
+								        <li>Integration på egen hjemmeside</li>
+								        <li>Udtræk af data og statistik</li>
+								    </ul>
+							    </div>
+						    </div>						
+						    <a class="ghost-button-rounded-corners" href="/About"><span>Læs mere</span></a>
+					    </div>
+				    </div>
+			    </div>
+            </section>
+
+            <!-- page: CLIENTS -->
+		    <section id="clients" class="l-section-picture-background">
+			    <div class="l-subsection" style="background-image:url(img/background.png);">
+				    <div class="l-subsection-h">
+					    <div class="l-subsection-hh g-html i-cf">
+					
+						    <h4>Hvem bruger systemet?</h4>
+						
+						    <div class="g-hr type_short">
+							    <span class="g-hr-h">
+								    <i class="fa fa-heart"></i>
+							    </span>
+						    </div>
+						
+						    <p>Clubcommander kan bruges i mange forskellige sammenhænge. Herunder ses du et udpluk af kunder som bruger systemet idag.</p>
+
+						    <div class="w-clients type_carousel columns_5">
+							    <div class="w-clients-h">
+								    <div class="w-clients-list">
+									    <div class="w-clients-list-h">
+										    <span class="w-clients-item">
+											    <img src="img/berns.png" alt="Berns logo" />
+										    </span>
+										    <span class="w-clients-item">
+											    <img src="img/tartelet.jpg" alt="Odense Tartelet Festival logo" />
+										    </span>
+										    <span class="w-clients-item">
+											    <img src="img/tasingehk.png" alt="Tåsinge HK logo" />
+										    </span>
+										    <span class="w-clients-item">
+											    <img src="img/sams2.png" alt="SAMS logo" />
+										    </span>
+										    <span class="w-clients-item">
+											    <img src="img/bomb2.png" alt="Fyns Gymnastik Bombardement logo" />
+										    </span>
+										    <span class="w-clients-item">
+											    <img src="img/tangoaalborg.png" alt="Tango Aalborg logo" />
+										    </span>
+                                            <span class="w-clients-item">
+											    <img src="img/dapt.png" alt="Danish Amateur Poker Tour logo" />
+										    </span>
+									    </div>
+								    </div>
+								    <a class="w-clients-nav to_prev disabled" href="javascript:void(0)" title="Show previous"></a>
+								    <a class="w-clients-nav to_next" href="javascript:void(0)" title="Show next"></a>
+							    </div>
+						    </div>
+
+					    </div>
+				    </div>
+			    </div>
+		    </section>
+
+            <!-- page: PRICES -->
+		    <section id="prices" class="l-section">
+			    <div class="l-subsection">
+				    <div class="l-subsection-h">
+					    <div class="l-subsection-hh g-html i-cf">
+					
+						    <h2><strong>Priser</strong></h2>
+						
+						    <div class="g-hr type_short">
+							    <span class="g-hr-h">
+								    <i class="fa fa-money"></i>
+							    </span>
+						    </div>
+					
+						    <p>Hos Clubcommander er priserne meget overkommelige, da der hverken er årlige eller månedlige abonnementsudgifter. <br/>Systemet finansieres udelukkende via brugerbetaling (<a href="/Fees">læs mere om gebyrer</a>). <br/><br/>Alle priser er i danske kroner og ekskl. moms. Der tages forbehold for fejl og mangler. 
+Prislisten er gældende fra 1. Nov 2016.</p>
+
+						    <div class="w-pricing">
+							    <div class="w-pricing-h">
+
+								    <div class="w-pricing-item">
+									    <div class="w-pricing-item-h">
+										    <div class="w-pricing-item-header">
+											    <div class="w-pricing-item-title">Basis pakken</div>
+											    <div class="w-pricing-item-price">kr. 1.496,- <br /><span style="font-size:12px">ekskl. moms</span></div>
+										    </div>
+										    <ul class="w-pricing-item-features">
+											    <li class="w-pricing-item-feature">Oprettelse af system, e-mail og betalingskonto</li>
+											    <li class="w-pricing-item-feature gray-line">Abonnement med ubegrænset antal medlemmer, hold og events</li>
+                                                <li class="w-pricing-item-feature">Online betalingsløsning (Dankort, eDankort, Visa, Visa/Electron & MasterCard)</li>
+										    </ul>
+										    <div class="w-pricing-item-footer">
+											    <a class="ghost-button-rounded-corners" href="javascript:void(0)" onclick="autoselect('1')"><span>Bestil nu</span></a>
+											    <br/><br/>
+											    <p>Vigtigt! <a href="/terms-and-conditions-of-subscription/">Læs betingelser</a></p>
+                                                <p style="margin-bottom: 0px">Se reference på hjemmeside:</p>
+											    <p><a href="http://berns.clubcommander.com/" target="_blank">Bernstorffsminde Efterskole</a></p>
+										    </div>
+									    </div>
+								    </div>
+
+								    <div class="w-pricing-item type_featured">
+									    <div class="w-pricing-item-h">
+										    <div class="w-pricing-item-header">
+											    <div class="w-pricing-item-title">Service pakken</div>
+											    <div class="w-pricing-item-price">kr. 4.400,- <br /><span style="font-size:12px">ekskl. moms</span></div>
+										    </div>
+										    <ul class="w-pricing-item-features">
+											    <li class="w-pricing-item-feature">Basis pakken</li>
+											    <li class="w-pricing-item-feature">+</li>
+											    <li class="w-pricing-item-feature gray-line">Strategimøde og system opsætning</li>
+                                                <li class="w-pricing-item-feature">+</li>
+                                                <li class="w-pricing-item-feature">Konsulenthjælp af 2 timers varighed</li>
+										    </ul>
+										    <div class="w-pricing-item-footer">
+											    <a class="ghost-button-rounded-corners" href="javascript:void(0)" onclick="autoselect('2')"><span>Bestil nu</span></a>
+											    <br/><br/>
+											    <p>Vigtigt! <a href="/terms-and-conditions-of-subscription/">Læs betingelser</a></p>
+                                                <p style="margin-bottom: 0px">Se reference på hjemmeside:</p>
+											    <p><a href="http://fnks.org/site.php?id=30" target="_blank">Foreningen af Nordiske Kiropraktorstuderende</a></p>
+										    </div>
+									    </div>
+								    </div>
+
+								    <div class="w-pricing-item">
+									    <div class="w-pricing-item-h">
+										    <div class="w-pricing-item-header">
+											    <div class="w-pricing-item-title">Total pakken</div>
+											    <div class="w-pricing-item-price">kr. 13.996,- *<br /><span style="font-size:12px">ekskl. moms</span></div>
+										    </div>
+										    <ul class="w-pricing-item-features">
+											    <li class="w-pricing-item-feature">Service pakken</li>
+											    <li class="w-pricing-item-feature">+</li>
+											    <li class="w-pricing-item-feature gray-line">Ny hjemmeside i responsivt web design inkl. gratis hosting</li>
+                                                <li class="w-pricing-item-feature">Integration af hold og events</li>
+                                                <li class="w-pricing-item-feature gray-line">Opsætning af egne udarbejdede tekster, billeder og videoer, samt logo</li>   
+										    </ul>
+
+										    <div class="w-pricing-item-footer">
+											    <a class="ghost-button-rounded-corners" href="javascript:void(0)" onclick="autoselect('3')"><span>Bestil nu</span></a>
+											    <br/><br/>
+											    <p>Vigtigt! <a href="/terms-and-conditions-of-subscription/">Læs betingelser</a></p>
+											    <p style="margin-bottom: 0px">Se reference på hjemmeside:</p>
+											    <p><a href="http://bombardement.dk" target="_blank">Fyns Gymnastik Bombardement</a><br/>
+                                                <a href="http://lundbyif.dk" target="_blank">Lundby Idrætsforening</a><br/>
+                                                <a href="http://danmarksstaerkestemand.dk" target="_blank">Danmarks Stærkeste Mand</a><br/>
+                                                <a href="http://koncertbussen.dk" target="_blank">koncertbussen.dk</a>
+											    </p>
+                                                <p style="font-size:10px">*Tilbud kan udarbejdes udfra andet og større behov. </p>
+                                            </div>
+									    </div>
+								    </div>
+							    </div>
+						    </div>
+					    </div>
+				    </div>
+			    </div>
+		    </section>
+
+            <!-- page: BUY NOW -->
+		    <section id="buy" class="l-section">
+			    <div class="l-subsection color_alternate ">
+				    <div class="l-subsection-h">
+					    <div class="l-subsection-hh g-html i-cf">
+
+						    <h2><strong>Bestil systemet</strong></h2>
+
+						    <div class="g-hr type_short">
+							    <span class="g-hr-h">
+								    <i class="fa fa-shopping-cart"></i>
+							    </span>
+						    </div>
+
+                            <div id="ctl00_PageContentHolder_SignUpPanel">
+	
+                                <div id="ctl00_PageContentHolder_ValidSummary" style="color:Red;display:none;">
+
+	</div>
+                
+                                <div class="left-col-form">
+                                    <div class="form-block"><strong>Kontaktperson/ansvarlig for systemet</strong></div>
+                                    <div class="form-block">
+                                        <select name="ctl00$PageContentHolder$SubscriptionList" id="ctl00_PageContentHolder_SubscriptionList" class="select">
+		<option selected="selected" value=""> V&#230;lg en pakke: </option>
+		<option value="1">Basis Pakken</option>
+		<option value="2">Service Pakken</option>
+		<option value="3">Total Pakken</option>
+
+	</select>
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator6" style="color:Red;visibility:hidden;">Ingen pakke er valgt.</span>
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$SignerNameTB" type="text" id="ctl00_PageContentHolder_SignerNameTB" class="textbox" placeholder="Navn" />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator1" style="color:Red;visibility:hidden;">'Tegners navn' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$SignerAddressTB" type="text" id="ctl00_PageContentHolder_SignerAddressTB" class="textbox" placeholder="Adresse" />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator2" style="color:Red;visibility:hidden;">'Tegners adresse' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$SignerPostalTB" type="text" id="ctl00_PageContentHolder_SignerPostalTB" class="textbox" placeholder="Post nr." />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator3" style="color:Red;visibility:hidden;">'Tegners post nr.' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$SignerCityTB" type="text" id="ctl00_PageContentHolder_SignerCityTB" class="textbox" placeholder="By" />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator10" style="color:Red;visibility:hidden;">'Tegners by' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$SignerPhoneTB" type="text" id="ctl00_PageContentHolder_SignerPhoneTB" class="textbox" placeholder="Telefon" />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator4" style="color:Red;visibility:hidden;">'Tegners tlf.' ikke udfyldt.</span>
+                                    </div>   
+                                    <div class="form-half-block">         
+                                        <input name="ctl00$PageContentHolder$SignerEmailTB" type="text" id="ctl00_PageContentHolder_SignerEmailTB" class="textbox" placeholder="E-mail" />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator18" style="color:Red;visibility:hidden;">'Tegners e-mail.' ikke udfyldt.</span>
+                                    </div>  
+                                    <div class="form-block">
+                                        <span ID="DomainLabel2" >http://</span>
+                                        <input name="ctl00$PageContentHolder$DomainPrefixTB" type="text" id="ctl00_PageContentHolder_DomainPrefixTB" class="textbox domain-tb" placeholder="Ønsket adresse" onkeyup="GetAnswer(this.value)" />
+                                        <span ID="DomainLabel3" >.clubcommander.com</span>
+                                    </div>  
+                                    <div class="form-block">                          
+                                        <span style="color: #666;"><i>Benyt helst et kort navn, f.eks. en forkortelse for klubben.</i></span>
+                                    </div>
+                                    <span id="ctl00_PageContentHolder_RequiredFieldValidator5" style="color:Red;visibility:hidden;">'Hjemmeside' ikke udfyldt.</span>
+                                    <span id="DomainLabel" ></span>
+                                           
+                                </div>
+
+                                <div class="right-col-form">
+                                    <div class="form-block">
+                                        <strong>Foreningens / Virksomhedens oplysninger</strong>
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$ClubNameTB" type="text" id="ctl00_PageContentHolder_ClubNameTB" class="textbox" placeholder="Navn" />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator8" style="color:Red;visibility:hidden;">'Klub navn' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$ClubAddressTB" type="text" id="ctl00_PageContentHolder_ClubAddressTB" class="textbox" placeholder="Adresse" />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator9" style="color:Red;visibility:hidden;">'Klub adresse' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-half-block">  
+                                        <input name="ctl00$PageContentHolder$ClubPostalTB" type="text" id="ctl00_PageContentHolder_ClubPostalTB" class="textbox" placeholder="Post nr." />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator11" style="color:Red;visibility:hidden;">'Klub post nr.' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$ClubCityTB" type="text" id="ctl00_PageContentHolder_ClubCityTB" class="textbox" placeholder="By" />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator12" style="color:Red;visibility:hidden;">'Klub by' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$ClubPhoneTB" type="text" id="ctl00_PageContentHolder_ClubPhoneTB" class="textbox" placeholder="Telefon" />
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$ClubEmailTB" type="text" id="ctl00_PageContentHolder_ClubEmailTB" class="textbox" placeholder="E-mail" />
+                                        <span id="ctl00_PageContentHolder_ClubEmailTB_RequiredFieldValidator" style="color:Red;visibility:hidden;">'Klub e-mail' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$ClubAccountRegNoTB" type="text" id="ctl00_PageContentHolder_ClubAccountRegNoTB" class="textbox" placeholder="Reg nr." />
+                                        <span id="ctl00_PageContentHolder_ClubAccountRegNoTB_RequiredFieldValidator" style="color:Red;visibility:hidden;">'Reg. nr.' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-half-block">                       
+                                        <input name="ctl00$PageContentHolder$ClubAccountNoTB" type="text" id="ctl00_PageContentHolder_ClubAccountNoTB" class="textbox" placeholder="Konto nr." />
+                                        <span id="ctl00_PageContentHolder_ClubAccountNoTB_RequiredFieldValidator" style="color:Red;visibility:hidden;">'Konto nr.' ikke udfyldt.</span>
+                                    </div>
+                                    <div class="form-block"> 
+                                        <textarea name="ctl00$PageContentHolder$NotesTB" rows="2" cols="20" id="ctl00_PageContentHolder_NotesTB" class="textbox" placeholder="Bemærkninger eller rabatkode" style="height:60px;width:98%;"></textarea>
+                                    </div>
+                                    <div class="form-block">
+                                        <span class="AcceptedAgreement"><input id="ctl00_PageContentHolder_MyCheckBox" type="checkbox" name="ctl00$PageContentHolder$MyCheckBox" /><label for="ctl00_PageContentHolder_MyCheckBox"> Jeg bekræfter at have læst og accepteret de <a href='/terms-and-conditions-of-subscription/' target='_blank'>gældende betingelser</a></label></span>
+                                        <br /><span id="ctl00_PageContentHolder_CustomValidator1" style="color:Red;visibility:hidden;">Før du kan fortsætte, skal du acceptere de gældende betingelserne.</span>
+                                    </div>
+                                    
+                                    <div class="form-block"> 
+                                        <div class="g-recaptcha" data-sitekey="6LfOiqgUAAAAAOs6vy95Lt0jb57KfjLJvFetFl5W"></div>
+                                        <script src='https://www.google.com/recaptcha/api.js'></script>
+                                    </div> 
+                                    
+                                    <div class="form-block">      
+                                        <input type="submit" name="ctl00$PageContentHolder$ctl00" value="Bestl nu" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$PageContentHolder$ctl00&quot;, &quot;&quot;, true, &quot;SignUp&quot;, &quot;&quot;, false, false))" />                              
+                                    </div>                      
+                                </div>
+                            
+</div>
+
+                                              
+                              
+						
+					    </div>
+				    </div>
+			    </div>
+				
+		    </section>
+
+            <!-- page: CONTACT -->
+		    <section id="contact" class="l-section">
+			
+			    <div class="l-subsection color_dark" style="background-image:url(img/blur.jpg); padding-bottom:0px;">
+				    <div class="l-subsection-h">
+					    <div class="l-subsection-hh g-html i-cf">
+					
+						    <h2><strong>Kontakt Os</strong></h2>
+
+						    <div class="g-hr type_short">
+							    <span class="g-hr-h">
+								    <i class="fa fa-envelope-o"></i>
+							    </span>
+						    </div>
+                            
+						    <div class="w-contacts">
+							    <div class="w-contacts-h">
+								    <div class="w-contacts-list">
+									    <div class="w-contacts-item">
+                                            <p class="size_big">Kunne du tænke dig at høre mere om vores system? 
+                                            <br/>Du er altid velkommen til at skrive til os, så ringer vi dig gerne op og hjælper dig frem mod den rigtige løsning. </p>
+                                            <p class="size_big">Skriv til os på <a href="/#contact-form" style="color:white">kontakt@clubcommander.com</a> eller udfyld formularen</p>
+									    </div>
+								    </div>
+							    </div>
+						    </div>
+
+					    </div>
+				    </div>
+			    </div>
+
+			    <div id="contact-form" class="l-subsection">
+				    <div class="l-subsection-h">
+					    <div class="l-subsection-hh g-html i-cf">
+                            <div style="width:100%; float:left">
+                                <div class="contact-form-style">
+                                
+                                <div id="ctl00_PageContentHolder_ContactPanel">
+	
+                                    <div id="ctl00_PageContentHolder_ValidationSummary1" style="color:Red;display:none;">
+
+	</div>
+                                    <div class="form-half-block">
+                                        <input name="ctl00$PageContentHolder$NameTB" type="text" id="ctl00_PageContentHolder_NameTB" tabindex="1" class="textbox" placeholder="Navn:" />
+                                        <span id="ctl00_PageContentHolder_NameTB_RequiredFieldValidator" style="color:Red;visibility:hidden;">'Navn' ikke udfyldt.</span>
+                                    </diV>
+                                    <div class="form-half-block">        
+                                        <input name="ctl00$PageContentHolder$EmailTB" type="text" id="ctl00_PageContentHolder_EmailTB" tabindex="2" class="textbox" placeholder="E-mail:" />
+                                        <span id="ctl00_PageContentHolder_EmailTB_RequiredFieldValidator" style="color:Red;visibility:hidden;">'E-mail' ikke udfyldt.</span>
+                                    </diV>  
+                                    <div class="form-half-block">       
+                                        <input name="ctl00$PageContentHolder$PhoneTB" type="text" id="ctl00_PageContentHolder_PhoneTB" tabindex="3" class="textbox" placeholder="Telefon:" />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator7" style="color:Red;visibility:hidden;">'Telefon' ikke udfyldt.</span>
+                                    </diV>
+                                    <div class="form-half-block">  
+                                        <input name="ctl00$PageContentHolder$ClubName2TB" type="text" id="ctl00_PageContentHolder_ClubName2TB" tabindex="4" class="textbox" placeholder="Forening:" />
+                                        <span id="ctl00_PageContentHolder_RequiredFieldValidator13" style="color:Red;visibility:hidden;">'Forening' ikke udfyldt.</span>
+                                    </diV>
+                                    <div class="form-block" style="margin-bottom:20px;"> 
+                                        <textarea name="ctl00$PageContentHolder$MessageTB" rows="2" cols="20" id="ctl00_PageContentHolder_MessageTB" tabindex="5" class="textbox" placeholder="Besked"></textarea>
+                                    </div>  
+                                    <div class="form-block username-form-block"> 
+                                        <input name="ctl00$PageContentHolder$Username" type="text" id="ctl00_PageContentHolder_Username" tabindex="5" placeholder="Besked" />     
+                                    </div> 
+                                          
+                                    <div class="form-block">      
+                                        <input type="submit" name="ctl00$PageContentHolder$SendIB" value="Send" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$PageContentHolder$SendIB&quot;, &quot;&quot;, true, &quot;SignUp2&quot;, &quot;&quot;, false, false))" id="ctl00_PageContentHolder_SendIB" />                              
+                                    </div>        
+                                    <div class="clear"></div>
+                                
+</div>
+                                </div>
+						    </div>
+						
+					    </div>
+				    </div>
+			    </div>
+				
+		    </section>
+        </div>
+    </div>
+    <div id="footer"></div>
+
+
+<div class="l-footer">
+	<div class="l-footer-h">
+
+		<!-- subfooter: top -->
+		<div class="l-subfooter at_top">
+			<div class="l-subfooter-h">
+
+				<div class="g-cols">
+					<div class="one-third">
+						<div class="widget">						
+							<h5>Info</h5>
+							<p><a href="/About/">Om systemet</a></p>
+							<p><a href="/Fees/">Gebyrer</a></p>
+							<p><a href="/Articles/get-started/">Kom hurtigt igang</a></p>
+							<p><a href="/Articles/support-qr/">Vejledning til scanning og brug af QR-billetter</a></p>
+							<p><a href="/Articles/export-to-td/">Eksport af deltagerliste til Tournament Director</a></p>
+							<p><a href="/Articles/import-from-td/">Import af resultater fra Tournament Director</a></p>
+							<p><a href="/Articles/account-support/">Mener du at Clubcommander har hævet penge på din konto fejlagtigt?</a></p>
+                            <p><a href="/Articles/support-faq/">FAQ</a></p>
+						</div>
+					</div>
+                
+					<div class="one-third">
+						<div class="widget">
+						
+							<h5>Handelsbetingelser</h5>
+							<p><a href="/terms-and-conditions-of-subscription/">Abonnementsbetingelser for Clubcommander medlemssystem</a></p>
+                            <p><a href="/databehandleraftale.pdf">GDPR - Databehandler aftale</a></p>
+                            <p><a href="/persondata.pdf">GDPR - Persondata for Dataansvarlig</a></p>
+							<p><a href="/terms-and-conditions-of-sale-tickets/">Handelsbetingelser for salg af billetter (Arrangør)</a></p>
+							<p><a href="/terms-and-conditions-of-sale/">Handelsbetingelser for online betaling (Køber)</a></p>
+                            <!-- <p><a href="/forretningsbetingelser_for_indløsning.pdf">Handelsbetingelser for indløsning</a></p> -->
+                            <p><a href="http://www.viabill.com/kredit/">Handelsbetingelser for Viabill</a></p>
+							
+						</div>
+					</div>
+					<div class="one-third">
+						<div class="widget">
+						
+							<h5>Support</h5>
+							<div class="w-contacts">
+								<div class="w-contacts-h">
+									<div class="w-contacts-list">
+										<div class="w-contacts-item">
+                                            <p>Er du allerede kunde? og har du tekniske spørgsmål til systemet, overførsler eller andet - så skal du skrive til </p>
+											<i class="fa fa-envelope-o"></i>
+											<span class="w-contacts-item-value"><a href="/#contact-form">support@clubcommander.com</a></span>
+										</div>
+									</div>
+								</div>
+							</div>						
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+    </div>
+
+
+    <div style="background-color:white; width:100%; float:left">
+	    <!-- subfooter: bottom -->
+	    <div class="l-subfooter at_top">
+            <div style="float:left; text-align:center; font-size:13px; width:100%">
+                <img src="/images/payment_cards.png" width="250" /> 
+            </div>
+		    <div class="l-subfooter-h i-cf">
+                <span style="float:left; text-align:center; font-size:13px; width:100%">© Eventbilletten ApS 2015 • Clubcommander er et produkt af Eventbilletten ApS •
+    CVR nr: 36045043, Syvstjernen 8, 5330 Munkebo </span>					
+		    </div>
+	    </div>
+    </div>
+</div>
+
+<!-- Cookies_overlay -->
+<div id="cookies_overlay">
+	
+    <p style="margin-top:0"><a id="close-cookies-overlay" class="cookie_close">X</a>Ved forsat at benytte Clubcommander, acceptere du vores brug af cookies. Læs mere her. <a id="cookies_info_link" href="http://clubcommander.com/Articles/Cookies/" target="_blank">her</a></p>
+</div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("ctl00_PageContentHolder_ValidSummary"), document.getElementById("ctl00_PageContentHolder_ValidationSummary1"));
+var Page_Validators =  new Array(document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator6"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator1"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator2"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator3"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator10"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator4"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator18"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator5"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator8"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator9"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator11"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator12"), document.getElementById("ctl00_PageContentHolder_ClubEmailTB_RequiredFieldValidator"), document.getElementById("ctl00_PageContentHolder_ClubAccountRegNoTB_RequiredFieldValidator"), document.getElementById("ctl00_PageContentHolder_ClubAccountNoTB_RequiredFieldValidator"), document.getElementById("ctl00_PageContentHolder_CustomValidator1"), document.getElementById("ctl00_PageContentHolder_NameTB_RequiredFieldValidator"), document.getElementById("ctl00_PageContentHolder_EmailTB_RequiredFieldValidator"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator7"), document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator13"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var ctl00_PageContentHolder_ValidSummary = document.all ? document.all["ctl00_PageContentHolder_ValidSummary"] : document.getElementById("ctl00_PageContentHolder_ValidSummary");
+ctl00_PageContentHolder_ValidSummary.validationGroup = "SignUp";
+var ctl00_PageContentHolder_RequiredFieldValidator6 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator6"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator6");
+ctl00_PageContentHolder_RequiredFieldValidator6.controltovalidate = "ctl00_PageContentHolder_SubscriptionList";
+ctl00_PageContentHolder_RequiredFieldValidator6.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator6.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator6.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator1 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator1"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator1");
+ctl00_PageContentHolder_RequiredFieldValidator1.controltovalidate = "ctl00_PageContentHolder_SignerNameTB";
+ctl00_PageContentHolder_RequiredFieldValidator1.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator1.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator1.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator2 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator2"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator2");
+ctl00_PageContentHolder_RequiredFieldValidator2.controltovalidate = "ctl00_PageContentHolder_SignerAddressTB";
+ctl00_PageContentHolder_RequiredFieldValidator2.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator2.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator2.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator3 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator3"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator3");
+ctl00_PageContentHolder_RequiredFieldValidator3.controltovalidate = "ctl00_PageContentHolder_SignerPostalTB";
+ctl00_PageContentHolder_RequiredFieldValidator3.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator3.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator3.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator10 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator10"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator10");
+ctl00_PageContentHolder_RequiredFieldValidator10.controltovalidate = "ctl00_PageContentHolder_SignerCityTB";
+ctl00_PageContentHolder_RequiredFieldValidator10.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator10.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator10.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator4 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator4"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator4");
+ctl00_PageContentHolder_RequiredFieldValidator4.controltovalidate = "ctl00_PageContentHolder_SignerPhoneTB";
+ctl00_PageContentHolder_RequiredFieldValidator4.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator4.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator4.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator18 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator18"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator18");
+ctl00_PageContentHolder_RequiredFieldValidator18.controltovalidate = "ctl00_PageContentHolder_SignerEmailTB";
+ctl00_PageContentHolder_RequiredFieldValidator18.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator18.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator18.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator5 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator5"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator5");
+ctl00_PageContentHolder_RequiredFieldValidator5.controltovalidate = "ctl00_PageContentHolder_DomainPrefixTB";
+ctl00_PageContentHolder_RequiredFieldValidator5.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator5.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator5.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator8 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator8"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator8");
+ctl00_PageContentHolder_RequiredFieldValidator8.controltovalidate = "ctl00_PageContentHolder_ClubNameTB";
+ctl00_PageContentHolder_RequiredFieldValidator8.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator8.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator8.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator9 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator9"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator9");
+ctl00_PageContentHolder_RequiredFieldValidator9.controltovalidate = "ctl00_PageContentHolder_ClubAddressTB";
+ctl00_PageContentHolder_RequiredFieldValidator9.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator9.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator9.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator11 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator11"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator11");
+ctl00_PageContentHolder_RequiredFieldValidator11.controltovalidate = "ctl00_PageContentHolder_ClubPostalTB";
+ctl00_PageContentHolder_RequiredFieldValidator11.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator11.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator11.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator12 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator12"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator12");
+ctl00_PageContentHolder_RequiredFieldValidator12.controltovalidate = "ctl00_PageContentHolder_ClubCityTB";
+ctl00_PageContentHolder_RequiredFieldValidator12.validationGroup = "SignUp";
+ctl00_PageContentHolder_RequiredFieldValidator12.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator12.initialvalue = "";
+var ctl00_PageContentHolder_ClubEmailTB_RequiredFieldValidator = document.all ? document.all["ctl00_PageContentHolder_ClubEmailTB_RequiredFieldValidator"] : document.getElementById("ctl00_PageContentHolder_ClubEmailTB_RequiredFieldValidator");
+ctl00_PageContentHolder_ClubEmailTB_RequiredFieldValidator.controltovalidate = "ctl00_PageContentHolder_ClubEmailTB";
+ctl00_PageContentHolder_ClubEmailTB_RequiredFieldValidator.validationGroup = "SignUp";
+ctl00_PageContentHolder_ClubEmailTB_RequiredFieldValidator.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_ClubEmailTB_RequiredFieldValidator.initialvalue = "";
+var ctl00_PageContentHolder_ClubAccountRegNoTB_RequiredFieldValidator = document.all ? document.all["ctl00_PageContentHolder_ClubAccountRegNoTB_RequiredFieldValidator"] : document.getElementById("ctl00_PageContentHolder_ClubAccountRegNoTB_RequiredFieldValidator");
+ctl00_PageContentHolder_ClubAccountRegNoTB_RequiredFieldValidator.controltovalidate = "ctl00_PageContentHolder_ClubAccountRegNoTB";
+ctl00_PageContentHolder_ClubAccountRegNoTB_RequiredFieldValidator.validationGroup = "SignUp";
+ctl00_PageContentHolder_ClubAccountRegNoTB_RequiredFieldValidator.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_ClubAccountRegNoTB_RequiredFieldValidator.initialvalue = "";
+var ctl00_PageContentHolder_ClubAccountNoTB_RequiredFieldValidator = document.all ? document.all["ctl00_PageContentHolder_ClubAccountNoTB_RequiredFieldValidator"] : document.getElementById("ctl00_PageContentHolder_ClubAccountNoTB_RequiredFieldValidator");
+ctl00_PageContentHolder_ClubAccountNoTB_RequiredFieldValidator.controltovalidate = "ctl00_PageContentHolder_ClubAccountNoTB";
+ctl00_PageContentHolder_ClubAccountNoTB_RequiredFieldValidator.validationGroup = "SignUp";
+ctl00_PageContentHolder_ClubAccountNoTB_RequiredFieldValidator.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_ClubAccountNoTB_RequiredFieldValidator.initialvalue = "";
+var ctl00_PageContentHolder_CustomValidator1 = document.all ? document.all["ctl00_PageContentHolder_CustomValidator1"] : document.getElementById("ctl00_PageContentHolder_CustomValidator1");
+ctl00_PageContentHolder_CustomValidator1.validationGroup = "SignUp";
+ctl00_PageContentHolder_CustomValidator1.evaluationfunction = "CustomValidatorEvaluateIsValid";
+ctl00_PageContentHolder_CustomValidator1.clientvalidationfunction = "verif_js";
+var ctl00_PageContentHolder_ValidationSummary1 = document.all ? document.all["ctl00_PageContentHolder_ValidationSummary1"] : document.getElementById("ctl00_PageContentHolder_ValidationSummary1");
+ctl00_PageContentHolder_ValidationSummary1.displaymode = "List";
+ctl00_PageContentHolder_ValidationSummary1.validationGroup = "SignUp2";
+var ctl00_PageContentHolder_NameTB_RequiredFieldValidator = document.all ? document.all["ctl00_PageContentHolder_NameTB_RequiredFieldValidator"] : document.getElementById("ctl00_PageContentHolder_NameTB_RequiredFieldValidator");
+ctl00_PageContentHolder_NameTB_RequiredFieldValidator.controltovalidate = "ctl00_PageContentHolder_NameTB";
+ctl00_PageContentHolder_NameTB_RequiredFieldValidator.validationGroup = "SignUp2";
+ctl00_PageContentHolder_NameTB_RequiredFieldValidator.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_NameTB_RequiredFieldValidator.initialvalue = "";
+var ctl00_PageContentHolder_EmailTB_RequiredFieldValidator = document.all ? document.all["ctl00_PageContentHolder_EmailTB_RequiredFieldValidator"] : document.getElementById("ctl00_PageContentHolder_EmailTB_RequiredFieldValidator");
+ctl00_PageContentHolder_EmailTB_RequiredFieldValidator.controltovalidate = "ctl00_PageContentHolder_EmailTB";
+ctl00_PageContentHolder_EmailTB_RequiredFieldValidator.validationGroup = "SignUp2";
+ctl00_PageContentHolder_EmailTB_RequiredFieldValidator.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_EmailTB_RequiredFieldValidator.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator7 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator7"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator7");
+ctl00_PageContentHolder_RequiredFieldValidator7.controltovalidate = "ctl00_PageContentHolder_PhoneTB";
+ctl00_PageContentHolder_RequiredFieldValidator7.validationGroup = "SignUp2";
+ctl00_PageContentHolder_RequiredFieldValidator7.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator7.initialvalue = "";
+var ctl00_PageContentHolder_RequiredFieldValidator13 = document.all ? document.all["ctl00_PageContentHolder_RequiredFieldValidator13"] : document.getElementById("ctl00_PageContentHolder_RequiredFieldValidator13");
+ctl00_PageContentHolder_RequiredFieldValidator13.controltovalidate = "ctl00_PageContentHolder_ClubName2TB";
+ctl00_PageContentHolder_RequiredFieldValidator13.validationGroup = "SignUp2";
+ctl00_PageContentHolder_RequiredFieldValidator13.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_PageContentHolder_RequiredFieldValidator13.initialvalue = "";
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+window.scrollTo = function () { };
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        
+theForm.oldSubmit = theForm.submit;
+theForm.submit = WebForm_SaveScrollPositionSubmit;
+
+theForm.oldOnSubmit = theForm.onsubmit;
+theForm.onsubmit = WebForm_SaveScrollPositionOnSubmit;
+//]]>
+</script>
+</form>    
+
+       
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-8682367-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+</body>
+
+</html>
